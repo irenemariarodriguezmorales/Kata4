@@ -10,14 +10,30 @@ import java.util.List;
 
 public class Kata4 {
 
-    public static void main(String[] args) throws IOException {
-        
-        String fileName = new String("email.txt"); 
-        List<Mail>mailList = MailListReader.read(fileName);
-        Histogram<String> mailHistogram = MailHistogramBuilder.build(mailList);
+    private static List<Mail> mailList;
+    private static Histogram <String> mailHistogram;
 
-        HistogramDisplay histogramDisplay = new HistogramDisplay("HISTOGRAM", mailHistogram);
-        histogramDisplay.execute();
-    } 
-    
+    public static void main(String[] args) throws IOException {
+       execute(); 
+    }
+
+    private static void execute() throws IOException {
+        input();
+        process();
+        output();
+    }
+
+    private static void input() throws IOException {
+        String fileName = new String("email.txt");
+        mailList = MailListReader.read(fileName);
+    }
+
+    private static void process() {
+        mailHistogram = MailHistogramBuilder.build(mailList);
+
+    }
+
+    private static void output() {
+        new HistogramDisplay("HISTOGRAMA",mailHistogram).execute();
+    }
 }

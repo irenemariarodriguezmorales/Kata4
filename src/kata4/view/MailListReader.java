@@ -8,33 +8,27 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MailListReader {
     
     public static List<Mail> read(String fileName) throws IOException {
+        List<Mail> list = new ArrayList<>();
         BufferedReader reader = null;
         try {
-            List<Mail> list = new ArrayList<>();
-            //Esto va en el MailListReader y desde aqu� lo invoca
+
             reader = new BufferedReader(new FileReader(new File(fileName)));
-            while(true){
+            while(true) {
                 String line = reader.readLine();
                 if(line == null) break;
-                if(Mail.isMail(line))
+                if(Mail.isMail(line)) {
                     list.add(new Mail(line));
+                }
             }
-            return list;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MailListReader.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException ex) {
-                Logger.getLogger(MailListReader.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println("ERROR: MailListReader:read(FileNotFound)" + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error al cerrar la conexion IOException");
         }
-        return null;
-    }
+        return list;
+    }    
 }
